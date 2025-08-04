@@ -1,17 +1,18 @@
 const container = document.getElementById("anime-container");
-
 let currentPage = 1;
 let isLoading = false;
 
 async function fetchTopAnime(page) {
   isLoading = true;
+  showLoading(true);
 
   try {
     const response = await fetch(`https://api.jikan.moe/v4/top/anime?page=${page}`);
     const result = await response.json();
 
     if (!result.data || result.data.length === 0) {
-      window.removeEventListener("scroll", handleScroll); // Hentikan jika data habis
+      window.removeEventListener("scroll", handleScroll);
+      showLoading(false);
       return;
     }
 
@@ -29,25 +30,28 @@ async function fetchTopAnime(page) {
 
       container.appendChild(card);
     });
-
   } catch (error) {
-    console.error("Gagal memuat data:", error);
+    console.error("Fetch error:", error);
   }
 
+  showLoading(false);
   isLoading = false;
 }
 
 function handleScroll() {
-  if (
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
-    !isLoading
-  ) {
+  const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+  if (nearBottom && !isLoading) {
     currentPage++;
     fetchTopAnime(currentPage);
   }
 }
 
-window.addEventListener("scroll", handleScroll);
+function showLoading(show) {
+  const loadingText = document.querySelector('.loading-text');
+  if (loadingText) {
+    loadingText.style.display = show ? 'block' : 'none';
+  }
+}
 
-// Load halaman pertama saat awal
+window.addEventListener("scroll", handleScroll);
 fetchTopAnime(currentPage);

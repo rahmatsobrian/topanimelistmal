@@ -1,27 +1,39 @@
-body {
-  font-family: Arial, sans-serif;
+/* RESET DASAR */
+* {
+  box-sizing: border-box;
   margin: 0;
-  background: #f0f0f0;
+  padding: 0;
 }
 
+/* BODY */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* HEADER */
 header {
-  background-color: #2e51a2;
+  background-color: #24c765;
   color: white;
   padding: 1rem;
   text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* CONTAINER */
 main#anime-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
   padding: 1rem;
 }
 
+/* CARD */
 .anime-card {
   position: relative;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: transform 0.2s;
@@ -33,25 +45,46 @@ main#anime-container {
 
 .anime-card img {
   width: 100%;
+  height: auto;
   display: block;
 }
 
 .anime-card h3 {
   font-size: 1rem;
   padding: 0.5rem;
-  margin: 0;
   text-align: center;
+  color: #222;
 }
 
+/* RANK */
 .rank {
   position: absolute;
   top: 8px;
   left: 8px;
-  background-color: #e91e63;
+  background-color: #24c765;
   color: white;
   padding: 4px 8px;
   border-radius: 6px;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 0.85rem;
   z-index: 1;
+}
+
+/* LOADING TEXT */
+.loading-text {
+  text-align: center;
+  padding: 1rem;
+  grid-column: 1 / -1;
+  color: #666;
+}
+
+/* RESPONSIVE GRID EXTRA */
+@media (max-width: 480px) {
+  main#anime-container {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  }
+
+  .anime-card h3 {
+    font-size: 0.9rem;
+  }
 }
